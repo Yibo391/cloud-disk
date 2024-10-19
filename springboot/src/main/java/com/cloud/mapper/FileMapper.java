@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
+
 public interface FileMapper {
     // 插入文件记录
     int insertFile(FileRecord file);
@@ -15,6 +16,7 @@ public interface FileMapper {
     // 根据文件 ID 删除文件
     int deleteFile(Long id);
 
-    // 如果需要，您可以添加更多方法
+    // 根据文件 ID 获取文件信息
+    FileRecord getFileById(Long id);
 }
 

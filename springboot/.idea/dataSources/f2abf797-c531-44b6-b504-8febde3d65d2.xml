@@ -1126,117 +1126,155 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <collation id="287" parent="1" name="utf8mb4_zh_0900_as_cs">
       <Charset>utf8mb4</Charset>
     </collation>
-    <schema id="288" parent="1" name="information_schema">
+    <schema id="288" parent="1" name="cloud">
+      <LastIntrospectionLocalTimestamp>2024-10-19.14:23:10</LastIntrospectionLocalTimestamp>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </schema>
+    <schema id="289" parent="1" name="information_schema">
+      <LastIntrospectionLocalTimestamp>2024-10-19.14:22:37</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
-    <schema id="289" parent="1" name="mysql">
+    <schema id="290" parent="1" name="mysql">
+      <Grants>user|||mysql.session|localhost|SELECT|G</Grants>
+      <LastIntrospectionLocalTimestamp>2024-10-19.14:22:38</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="290" parent="1" name="performance_schema">
+    <schema id="291" parent="1" name="performance_schema">
+      <LastIntrospectionLocalTimestamp>2024-10-19.14:22:39</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="291" parent="1" name="sys">
+    <schema id="292" parent="1" name="sys">
+      <Grants>sys_config|||mysql.sys|localhost|SELECT|G</Grants>
+      <LastIntrospectionLocalTimestamp>2024-10-19.14:22:39</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="292" parent="1" name="xm_pro">
+    <schema id="293" parent="1" name="xm_pro">
       <LastIntrospectionLocalTimestamp>2024-10-17.18:15:05</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="293" parent="1" name="debian-sys-maint">
+    <user id="294" parent="1" name="debian-sys-maint">
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="294" parent="1" name="mysql.infoschema">
+    <user id="295" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="295" parent="1" name="mysql.session">
+    <user id="296" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="296" parent="1" name="mysql.sys">
+    <user id="297" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="297" parent="1" name="root">
+    <user id="298" parent="1" name="root">
       <Host>localhost</Host>
       <Plugin>auth_socket</Plugin>
     </user>
-    <user id="298" parent="1" name="yibo">
+    <user id="299" parent="1" name="yibo">
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="299" parent="292" name="department">
+    <table id="300" parent="288" name="files">
       <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="300" parent="292" name="employee">
+    <table id="301" parent="288" name="users">
       <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <column id="301" parent="299" name="id">
-      <AutoIncrement>5</AutoIncrement>
+    <column id="302" parent="300" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
+      <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="302" parent="299" name="department_name">
+    <column id="303" parent="300" name="user_id">
+      <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>bigint|0s</StoredType>
     </column>
-    <index id="303" parent="299" name="PRIMARY">
+    <column id="304" parent="300" name="file_name">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="305" parent="300" name="file_path">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="306" parent="300" name="file_size">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="307" parent="300" name="upload_time">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="308" parent="300" name="files_ibfk_1">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="309" parent="300" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="304" parent="299" name="PRIMARY">
+    <index id="310" parent="300" name="user_id">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="311" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="305" parent="300" name="id">
+    <column id="312" parent="301" name="id">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
+      <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="306" parent="300" name="name">
-      <Position>2</Position>
-      <StoredType>varchar(255)|0s</StoredType>
-    </column>
-    <column id="307" parent="300" name="sex">
-      <Position>3</Position>
-      <StoredType>char(1)|0s</StoredType>
-    </column>
-    <column id="308" parent="300" name="no">
-      <Position>4</Position>
-      <StoredType>char(20)|0s</StoredType>
-    </column>
-    <column id="309" parent="300" name="age">
-      <Position>5</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="310" parent="300" name="descr">
-      <Position>6</Position>
-      <StoredType>longtext|0s</StoredType>
-    </column>
-    <column id="311" parent="300" name="department_id">
+    <column id="313" parent="301" name="username">
       <NotNull>1</NotNull>
-      <Position>7</Position>
-      <StoredType>int|0s</StoredType>
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <index id="312" parent="300" name="PRIMARY">
+    <column id="314" parent="301" name="password">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="315" parent="301" name="role">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <index id="316" parent="301" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="313" parent="300" name="PRIMARY">
+    <index id="317" parent="301" name="username">
+      <ColNames>username</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="318" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="319" parent="301" name="username">
+      <UnderlyingIndexName>username</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

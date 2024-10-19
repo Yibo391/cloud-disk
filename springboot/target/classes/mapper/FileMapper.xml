@@ -14,6 +14,10 @@
         SELECT * FROM files WHERE user_id = #{userId}
     </select>
 
+    <select id="getFileById" parameterType="Long" resultType="com.cloud.model.FileRecord">
+        SELECT * FROM files WHERE id = #{id}
+    </select>
+
     <delete id="deleteFile" parameterType="Long">
         DELETE FROM files WHERE id = #{id}
     </delete>

@@ -4,6 +4,10 @@ spring:
     username: yibo
     password: Y1b0@Pass!
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,3 +28,5 @@ mybatis:
 logging:
   level:
     org.springframework.security: DEBUG
+file:
+  upload-dir: /home/yibo/Desktop/cloud-project/springboot/uploads
