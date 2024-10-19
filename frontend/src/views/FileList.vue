@@ -1,10 +1,10 @@
 <template>
   <div class="file-list">
     <el-table :data="files" style="width: 100%">
-      <el-table-column prop="fileName" label="文件名" />
-      <el-table-column prop="fileSize" label="大小" />
-      <el-table-column prop="uploadTime" label="上传时间" />
-      <el-table-column label="操作">
+      <el-table-column prop="fileName" label="File name" />
+      <el-table-column prop="fileSize" label="File size" />
+      <el-table-column prop="uploadTime" label="Upload date" />
+      <el-table-column label="Operate">
         <template #default="scope">
           <el-button size="small" @click="downloadFile(scope.row.id)">下载</el-button>
           <el-button size="small" type="danger" @click="deleteFile(scope.row.id)">删除</el-button>
@@ -35,7 +35,7 @@ export default {
             this.files = response.data
           })
           .catch(() => {
-            this.$message.error('加载文件列表失败')
+            this.$message.error('fail to load the list')
           })
     },
     downloadFile(fileId) {
@@ -50,22 +50,22 @@ export default {
             link.click()
           })
           .catch(() => {
-            this.$message.error('下载失败')
+            this.$message.error('fail to download file')
           })
     },
     deleteFile(fileId) {
-      this.$confirm('确定要删除该文件吗？', '提示', {
+      this.$confirm('Do you want to delete it?', 'tips', {
         type: 'warning',
       })
           .then(() => {
             axios
                 .delete(`/files/delete/${fileId}`)
                 .then(() => {
-                  this.$message.success('文件已删除')
+                  this.$message.success('deleted')
                   this.fetchFiles()
                 })
                 .catch(() => {
-                  this.$message.error('删除失败')
+                  this.$message.error('fail to delete')
                 })
           })
           .catch(() => {})
@@ -82,5 +82,5 @@ export default {
 </script>
 
 <style scoped>
-/* 添加样式 */
+/*  */
 </style>

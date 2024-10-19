@@ -8,7 +8,7 @@
         :on-success="onSuccess"
         :on-error="onError"
     >
-      <el-button type="primary">选择文件</el-button>
+      <el-button type="primary">choose file</el-button>
     </el-upload>
   </div>
 </template>
@@ -25,10 +25,10 @@ export default {
   },
   methods: {
     onSuccess(response, file) {
-      this.$message.success(`${file.name} 上传成功`)
+      this.$message.success(`${file.name} Successfully uploaded`)
     },
     onError(error, file) {
-      this.$message.error(`${file.name} 上传失败`)
+      this.$message.error(`${file.name} failed to upload`)
     },
   },
 }
