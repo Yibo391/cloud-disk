@@ -2,6 +2,9 @@ package com.cloud.config;
 
 import com.cloud.service.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,15 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-// 更改为 jakarta.servlet 包
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 // 导入必要的异常和工具类
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+// 导入 CORS 所需的类
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -39,22 +42,23 @@ public class SecurityConfig {
 
     // 配置安全过滤器链
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 禁用 CSRF（仅用于测试，生产环境应启用）
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 启用 CORS
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/register", "/error").permitAll() // 允许匿名访问
-                        .anyRequest().authenticated() // 其他请求需要认证
+                        .requestMatchers("/login", "/register", "/error").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginProcessingUrl("/login") // 登录 URL
-                        .successHandler(authenticationSuccessHandler()) // 自定义成功处理器
-                        .failureHandler(authenticationFailureHandler()) // 自定义失败处理器
+                        .loginProcessingUrl("/login")
+                        .successHandler(authenticationSuccessHandler())
+                        .failureHandler(authenticationFailureHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessHandler(logoutSuccessHandler()) // 自定义注销处理器
+                        .logoutSuccessHandler(logoutSuccessHandler())
                         .permitAll()
                 )
                 .userDetailsService(userDetailsService);
@@ -62,10 +66,24 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // 定义 CORS 配置源
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:5173"); // 允许前端的域名
+        configuration.addAllowedMethod("*"); // 允许所有 HTTP 方法
+        configuration.addAllowedHeader("*"); // 允许所有请求头
+        configuration.setAllowCredentials(true); // 允许发送凭证（如 Cookie）
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     // 自定义认证成功处理器
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return (request, response, authentication) -> {
+        return (HttpServletRequest request, HttpServletResponse response, org.springframework.security.core.Authentication authentication) -> {
+            System.out.println("AuthenticationSuccessHandler 被调用");
             response.setContentType("application/json;charset=UTF-8");
             PrintWriter out = response.getWriter();
             Map<String, Object> result = new HashMap<>();
@@ -82,7 +100,8 @@ public class SecurityConfig {
     // 自定义认证失败处理器
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
-        return (request, response, exception) -> {
+        return (HttpServletRequest request, HttpServletResponse response, org.springframework.security.core.AuthenticationException exception) -> {
+            System.out.println("AuthenticationFailureHandler 被调用");
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
             PrintWriter out = response.getWriter();
@@ -98,7 +117,8 @@ public class SecurityConfig {
     // 自定义注销成功处理器
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
-        return (request, response, authentication) -> {
+        return (HttpServletRequest request, HttpServletResponse response, org.springframework.security.core.Authentication authentication) -> {
+            System.out.println("LogoutSuccessHandler 被调用");
             response.setContentType("application/json;charset=UTF-8");
             PrintWriter out = response.getWriter();
             Map<String, Object> result = new HashMap<>();

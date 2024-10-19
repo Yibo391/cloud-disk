@@ -39,6 +39,8 @@ export default {
               })
           )
           .then((response) => {
+            console.log(response)
+
             if (response.data.status === 200) {
               localStorage.setItem('user', this.form.username)
               this.$message.success(response.data.message)
