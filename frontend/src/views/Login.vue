@@ -29,7 +29,7 @@
             type="password"
             placeholder="Password"
             autocomplete="off"
-            prefix-icon="LockFilled"
+            prefix-icon="Lock"
         />
       </el-form-item>
       <el-form-item>

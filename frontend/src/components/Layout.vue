@@ -5,7 +5,7 @@
       <div class="logo">Cloud Disk</div>
       <el-menu mode="horizontal" :default-active="$route.path" @select="onSelect">
         <el-menu-item index="/files">
-          <el-icon><FolderFilled /></el-icon>
+          <el-icon><Folder /></el-icon>
           My Files
         </el-menu-item>
         <el-menu-item index="/upload">
