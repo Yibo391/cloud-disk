@@ -1,0 +1,20 @@
+/* src/assets/styles/global.css */
+
+/* ... existing styles ... */
+
+.el-input,
+.el-button,
+.el-select,
+.el-table {
+  border-radius: 8px;
+}
+
+.el-button {
+  border-radius: 8px;
+}
+
+.el-form-item {
+  margin-bottom: 20px;
+}
+
+/* ... other styles ... */
