@@ -19,7 +19,7 @@
       </el-menu>
     </el-header>
     <el-main>
-      <router-view></router-view>
+      <router-view />
     </el-main>
   </el-container>
 </template>
@@ -27,27 +27,21 @@
 <script>
 import axios from '../utils/axios'
 import { Folder, UploadFilled, CloseBold } from '@element-plus/icons-vue'
-
+import "../styles/Layout.css"
 export default {
   name: 'Layout',
-  components: {
-    Folder,
-    UploadFilled,
-    CloseBold,
-  },
+  components: { Folder, UploadFilled, CloseBold },
   methods: {
     onSelect(index) {
       if (index === '/logout') {
-        this.$confirm('Are you sure you want to logout?', 'Confirm', {
-          type: 'warning',
+        this.$confirm('Are you sure you want to logout?', 'Confirm', { type: 'warning' })
+        .then(() => {
+          axios.post('/logout').finally(() => {
+            localStorage.removeItem('user')
+            this.$router.push('/login')
+          })
         })
-            .then(() => {
-              axios.post('/logout').finally(() => {
-                localStorage.removeItem('user')
-                this.$router.push('/login')
-              })
-            })
-            .catch(() => {})
+        .catch(() => {})
       } else {
         this.$router.push(index)
       }
@@ -55,33 +49,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.logo {
-  color: #fff;
-  font-size: 20px;
-  line-height: 60px;
-  float: left;
-  margin-right: 20px;
-}
-
-.el-menu-item {
-  border-radius: 8px;
-  margin: 0 5px;
-  padding: 0 15px;
-}
-
-.el-menu-item:hover {
-  background-color: #f0f2f5;
-}
-
-.el-menu-item.is-active {
-  background-color: #409eff;
-  color: #fff;
-}
-
-.el-menu-item .el-icon {
-  margin-right: 8px;
-  vertical-align: middle;
-}
-</style>

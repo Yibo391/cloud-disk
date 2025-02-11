@@ -12,30 +12,30 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    // 密码加密器
+    // Password encoder
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // 根据用户名加载用户信息
+    // Load user information by username
     public User loadUserByUsername(String username) {
         return userMapper.loadUserByUsername(username);
     }
 
-    // 注册新用户
+    // Register new user
     public int registerUser(String username, String password, String role) {
-        // 检查用户名是否已存在
+        // Check if username already exists
         if (userMapper.loadUserByUsername(username) != null) {
-            // 返回 -1 表示用户名已存在
+            // Return -1 if username already exists
             return -1;
         }
 
-        // 创建新用户对象
+        // Create new user object
         User user = new User();
         user.setUsername(username);
-        // 加密密码
+        // Encrypt password
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
 
-        // 插入用户到数据库
+        // Insert user into database
         return userMapper.insertUser(user);
     }
 }

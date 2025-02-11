@@ -5,18 +5,17 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-
 public interface FileMapper {
-    // 插入文件记录
+    // Insert file record
     int insertFile(FileRecord file);
 
-    // 根据用户 ID 获取文件列表
+    // Get file list by user ID
     List<FileRecord> getFilesByUserId(Long userId);
 
-    // 根据文件 ID 删除文件
+    // Delete file by file ID
     int deleteFile(Long id);
 
-    // 根据文件 ID 获取文件信息
+    // Get file information by file ID
     FileRecord getFileById(Long id);
 }
 

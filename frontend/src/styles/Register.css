@@ -1,0 +1,50 @@
+.auth-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.auth-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.el-input {
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.el-input:focus-within {
+  border-color: #409eff;
+}
+
+.auth-button {
+  width: 100%;
+  border-radius: 8px;
+  background-color: #409eff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #66b1ff;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #606266;
+}

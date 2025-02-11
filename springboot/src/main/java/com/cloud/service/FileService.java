@@ -132,4 +132,59 @@ public class FileService {
 
         return "文件删除成功";
     }
+
+    // 预览文件
+    public ResponseEntity<Resource> previewFile(Long fileId, String username) {
+        try {
+            User user = userMapper.loadUserByUsername(username);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            FileRecord fileRecord = fileMapper.getFileById(fileId);
+            if (fileRecord == null || !fileRecord.getUserId().equals(user.getId())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+            File file = new File(fileRecord.getFilePath());
+            if (!file.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            Resource resource = new FileSystemResource(file);
+            HttpHeaders headers = new HttpHeaders();
+            String extension = getFileExtension(fileRecord.getFileName()).toLowerCase();
+            String contentType = switch (extension) {
+                case "pdf" -> "application/pdf";
+                case "png" -> "image/png";
+                case "jpg", "jpeg" -> "image/jpeg";
+                case "gif" -> "image/gif";
+                default -> "application/octet-stream";
+            };
+            
+            headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+            headers.add("Content-Disposition", "inline; filename=\"" + fileRecord.getFileName() + "\"");
+            // Remove X-Frame-Options header for preview
+            headers.remove("X-Frame-Options");
+            // Add cache control headers
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private String getFileExtension(String fileName) {
+        int lastIndexOf = fileName.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return fileName.substring(lastIndexOf + 1);
+    }
 }

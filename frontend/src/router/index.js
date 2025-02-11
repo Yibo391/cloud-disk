@@ -1,18 +1,24 @@
 // src/router/index.js
 
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import FileList from '../views/FileList.vue'
 import Upload from '../views/Upload.vue'
 import Layout from '../components/Layout.vue'
+import Home from '../views/Home.vue'
 
 const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   {
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { requiresAuth: false },
+    meta: { public: true },
   },
   {
     path: '/register',
@@ -50,7 +56,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 })
 

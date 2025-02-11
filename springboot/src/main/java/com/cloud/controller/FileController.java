@@ -4,6 +4,7 @@ import com.cloud.model.FileRecord;
 import com.cloud.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,16 @@ public class FileController {
     public String deleteFile(@PathVariable Long fileId, Authentication authentication) {
         String username = authentication.getName();
         return fileService.deleteFile(fileId, username);
+    }
+
+    // 文件预览
+    @GetMapping("/preview/{fileId}")
+    public ResponseEntity<Resource> previewFile(@PathVariable Long fileId, Authentication authentication) {
+        // If no authentication, return unauthorized
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String username = authentication.getName();
+        return fileService.previewFile(fileId, username);
     }
 }

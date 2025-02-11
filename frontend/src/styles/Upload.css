@@ -1,0 +1,43 @@
+.upload-container {
+  margin: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.upload-container:hover {
+  transform: translateY(-3px);
+}
+
+.upload-demo {
+  border: 2px dashed #c0c4cc;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.upload-demo:hover {
+  border-color: #409eff;
+}
+
+.el-icon {
+  font-size: 50px;
+  color: #409eff;
+}
+
+.el-upload__text {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #606266;
+}
+
+.el-upload__tip {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #909399;
+}

@@ -2,14 +2,14 @@
 <template>
   <div class="upload-container">
     <el-upload
-        class="upload-demo"
-        drag
-        action="http://localhost:9090/files/upload"
-        :headers="headers"
-        :with-credentials="true"
-        multiple
-        :on-success="onSuccess"
-        :on-error="onError"
+      class="upload-demo"
+      drag
+      action="http://localhost:9090/files/upload"
+      :headers="headers"
+      :with-credentials="true"
+      multiple
+      :on-success="onSuccess"
+      :on-error="onError"
     >
       <el-icon><UploadFilled /></el-icon>
       <div class="el-upload__text">
@@ -22,17 +22,15 @@
 
 <script>
 import { UploadFilled } from '@element-plus/icons-vue'
-
+import "../styles/Upload.css"
 export default {
   name: 'Upload',
-  components: {
-    UploadFilled,
-  },
+  components: { UploadFilled },
   data() {
     return {
       headers: {
-        // Add any required headers here
-      },
+        // ...existing headers if needed...
+      }
     }
   },
   methods: {
@@ -45,39 +43,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.upload-container {
-  margin: 20px;
-}
-
-.upload-demo {
-  border: 2px dashed #d9d9d9;
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #fafafa;
-}
-
-.upload-demo:hover {
-  border-color: #409eff;
-}
-
-.el-icon {
-  font-size: 50px;
-  color: #409eff;
-}
-
-.el-upload__text {
-  margin-top: 16px;
-  font-size: 16px;
-  color: #606266;
-}
-
-.el-upload__tip {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #909399;
-}
-</style>

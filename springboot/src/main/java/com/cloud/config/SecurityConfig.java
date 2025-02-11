@@ -47,11 +47,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 启用 CORS
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/register", "/error").permitAll()
+                        .requestMatchers("/login", "/login.html", "/register", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginProcessingUrl("/login")
+                        .loginPage("/#/login") // update to match your Vue route; adjust if using history mode
+                        .loginProcessingUrl("/login") // changed to match the POST endpoint from frontend
                         .successHandler(authenticationSuccessHandler())
                         .failureHandler(authenticationFailureHandler())
                         .permitAll()
@@ -60,6 +61,12 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessHandler(logoutSuccessHandler())
                         .permitAll()
+                )
+                .headers(headers -> headers
+                        .frameOptions().disable()  // Disable X-Frame-Options
+                        .xssProtection()
+                        .and()
+                        .contentTypeOptions()
                 )
                 .userDetailsService(userDetailsService);
 

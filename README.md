@@ -8,7 +8,10 @@ A full-stack cloud storage application with secure file management capabilities.
 - File Upload/Download
 - File Management (List/Delete)
 - Secure Storage with User Isolation
-- Role-based Access Control
+
+## System Architecture
+
+![Functionality appearance](./image.png)
 
 ## Technology Stack
 
