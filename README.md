@@ -9,7 +9,7 @@ A full-stack cloud storage application with secure file management capabilities.
 - File Management (List/Delete)
 - Secure Storage with User Isolation
 
-## System Architecture
+## Functionality appearance
 
 ![Functionality appearance](./image.png)
 
